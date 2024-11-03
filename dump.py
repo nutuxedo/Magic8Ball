@@ -1,21 +1,17 @@
-import tkinter.ttk as ttk
 import tkinter as tk
+from tkinter import PhotoImage
 
-window = tk.Tk()
-window.title("what")
-#window.geometry("150x50")
-lbl_greeting = tk.Label(
-    text="Hello, world",
-    fg="cadet blue",
-    bg="azure",
-    width=15,
-    height=1,
-)
-lbl_greeting.pack()
-button = tk.Button(
-    text = "yes",
-    bg = "black",
-    fg = "red",
-)
-button.pack()
-window.mainloop()
+# Create the main window
+parent = tk.Tk()
+parent.title("Image in Tkinter")
+
+# Load the image
+image = PhotoImage(file="imgs/Magic_eight_ball.png")
+
+# Create a label to display the image
+image_label = tk.Label(parent, image=image)
+image_label.pack()
+
+# Start the Tkinter event loop
+parent.mainloop()
+
