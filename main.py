@@ -8,6 +8,7 @@ import pygame
 def exit_con():
     con_window = tk.Tk()
     con_window.title("Exit")
+    con_window.resizable(False,False)
     #con_window.geometry("150x150")
     ex_com = tk.Label(
         con_window,
@@ -39,6 +40,7 @@ def about_win():
     about_window = tk.Tk()
     about_window.geometry("150x80")
     about_window.title("About")
+    about_window.resizable(False, False)
     #about_img = tk.Label(
         #about_window,
         #image = img
