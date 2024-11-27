@@ -126,7 +126,6 @@ def mainwindow():
     #shaken_confirm.grid_remove()
     about_btn.grid(row = 3, column = 0, ipadx = 10, pady = 5)
     exit_btn.grid(row = 3, column = 1, ipadx = 10, pady = 5)
-    root.mainloop() 
-    return root
+    root.mainloop()
 
 root = mainwindow()
