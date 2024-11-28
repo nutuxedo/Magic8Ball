@@ -3,13 +3,42 @@ import random
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import PhotoImage
-import pygame
 import sys
+import time
 
 # main 8 ball content here
 class EightBall:
     def __init__(self):
-        print("You have shaken the ball!")
+        # Answers provided from https://en.wikipedia.org/wiki/Magic_8_Ball
+        self.answers = [
+            "It is certain",
+            "It is decidedly so",
+            "Without a doubt",
+            "Yes definitely",
+            "You may rely on it",
+            "As I see it yes",
+            "Most likely",
+            "Outlook good",
+            "Yes",
+            "Signs point to yes",
+            "Reply hazy try again",
+            "Ask again later",
+            "Better not tell you now",
+            "Cannot predict now",
+            "Concentrate and ask again",
+            "Don't count on it",
+            "My reply is no",
+            "My sources say no",
+            "Outlook not so good",
+            "Very doubtful"
+        ]
+    def shake(self):
+        print("Shaking the ball...")
+        time.sleep(2)
+        return self.get_answer()
+    
+    def get_answer(self):
+        return random.choice(self.answers)
         
 def about_win(root):
     #img = PhotoImage(file="imgs/Magic_eight_ball.png")
@@ -97,7 +126,7 @@ def mainwindow():
         text ="Shake the ball!",
         bg="sky blue",
         font=("Cantarell", 12, "bold"),
-        command= EightBall
+        command=lambda: print(EightBall().shake())
     )
 
     shaken_confirm = tk.Label(
@@ -116,7 +145,7 @@ def mainwindow():
     exit_btn = tk.Button(
         root,
         text = "Exit",
-        bg="sky blue",
+        bg = "sky blue",
         command = lambda: exit_con(root)
     )
 # grid placement
