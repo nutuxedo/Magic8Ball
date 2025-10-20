@@ -1,3 +1,4 @@
+# Head to line 160 for custom added ignores
 # Created by https://www.toptal.com/developers/gitignore/api/windows,pycharm,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,pycharm,linux
 
@@ -156,3 +157,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,pycharm,linux
+
+# user-added files/folders
+qt_testground/
