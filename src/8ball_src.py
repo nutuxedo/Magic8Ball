@@ -33,8 +33,11 @@ class EightBall:
             "Very doubtful"
         ]
     def shake(self):
-        print("Shaking the ball...")
-        time.sleep(2)
+        """Return an answer immediately (non-blocking).
+
+        The original implementation used time.sleep(2). The UI now uses `root.after(2000, ...)`
+        to implement the visible delay, so `shake()` should not block the event loop.
+        """
         return self.get_answer()
     
     def get_answer(self):
@@ -59,7 +62,7 @@ def about_win(root):
     )
     version_num = tk.Label(
         about_window,
-        text="by nutuxedo - version 0",
+        text="by nutuxedo - v0.1alpha",
         font=("Cantarell", 8),
         bg="white",
         width="25"
@@ -109,11 +112,12 @@ def exit_con(root):
 def mainwindow():
     root = tk.Tk()
     root.title("8 Ball funsies")
-    root.geometry("250x160")
-    root.resizable(False,False)
+    root.geometry("250x180")
+    root.resizable(False, False)
+
     maincontent = tk.Label(
         root,
-        text="8 ball content here",
+        text="The 8-ball",
         fg="black",
         bg="white",
         width=25,
@@ -121,40 +125,62 @@ def mainwindow():
         font=("Cantarell", 12, "bold")
     )
 
-    fortune_btn = tk.Button(
+    # create one EightBall instance for the UI session
+    eightball = EightBall()
+
+    # label to display the confirmation then the chosen answer
+    result_lbl = tk.Label(
         root,
-        text ="Shake the ball!",
-        bg="sky blue",
-        font=("Cantarell", 12, "bold"),
-        command=lambda: print(EightBall().shake())
+        text="",
+        font=("Cantarell", 10, "bold"),
+        fg="black",
+        bg="white",
+        width=25,
+        height=2
     )
 
-    shaken_confirm = tk.Label(
+    def on_shake():
+        # show confirmation message inside the result box immediately
+        result_lbl.config(text="Shaking...")
+
+        # after 2000ms, fetch answer, display it in the GUI
+        def show_answer():
+            answer = eightball.shake()
+            result_lbl.config(text=answer)
+
+        # schedule show_answer after 2000ms
+        root.after(2000, show_answer)
+
+    fortune_btn = tk.Button(
         root,
-        text="You have shaken the ball!",
-        font=("Cantarell", 8, "italic")
+        text="Shake!",
+        bg="sky blue",
+        font=("Cantarell", 12, "bold"),
+        command=on_shake
     )
 
     about_btn = tk.Button(
         root,
-        text = "About",
-        bg = "sky blue",
-        #fg = "red",
-        command = lambda: about_win(root)
+        text="About",
+        bg="sky blue",
+        command=lambda: about_win(root)
     )
     exit_btn = tk.Button(
         root,
-        text = "Exit",
-        bg = "sky blue",
-        command = lambda: exit_con(root)
+        text="Exit",
+        bg="sky blue",
+        command=lambda: exit_con(root)
     )
-# grid placement
-    maincontent.grid(row = 0, column = 0, columnspan = 2, pady = 0)
-    fortune_btn.grid(row =1, column=0, columnspan=2, pady=8)
-    shaken_confirm.grid(row=2, columnspan=2)
-    #shaken_confirm.grid_remove()
-    about_btn.grid(row = 3, column = 0, ipadx = 10, pady = 5)
-    exit_btn.grid(row = 3, column = 1, ipadx = 10, pady = 5)
+
+    # grid placement
+    maincontent.grid(row=0, column=0, columnspan=2, pady=0)
+    fortune_btn.grid(row=1, column=0, columnspan=2, pady=8)
+    result_lbl.grid(row=2, columnspan=2)
+    about_btn.grid(row=3, column=0, ipadx=10, pady=5)
+    exit_btn.grid(row=3, column=1, ipadx=10, pady=5)
+
     root.mainloop()
 
-root = mainwindow()
+
+if __name__ == '__main__':
+    mainwindow()
